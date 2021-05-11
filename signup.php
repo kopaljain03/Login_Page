@@ -9,8 +9,9 @@ $password=$_POST["password"];
 $cpassword=$_POST["cpassword"];
 $exist=false;
 if(($password==$cpassword) && $exist==false){
+  $hash=password_hash($password, PASSWORD_DEFAULT);
 $shoalert=true;
-$sql="INSERT INTO `users` ( `username`, `password`, `dt`) VALUES ( '$username', '$password', current_timestamp())";
+$sql="INSERT INTO `users` ( `username`, `password`, `dt`) VALUES ( '$username', '$hash', current_timestamp())";
 $result=mysqli_query($conn,$sql);
 }
 else{
