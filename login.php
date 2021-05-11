@@ -21,7 +21,7 @@ if($num==1){
 else{
 $shoerror=true;
 $shoerror="Invalid credentials";
-}
+} 
 }
 ?>
 
@@ -70,12 +70,12 @@ $shoerror="Invalid credentials";
     <form action='/login/login.php' method='post' id='loginform'>
   <div class="mb-3 col-md-6">
     <label for="username" class="form-label">Username</label>
-    <input type="email" class="form-control " id="username" name="username" aria-describedby="emailHelp">
+    <input type="email" class="form-control " id="username" name="username" maxlength="30" aria-describedby="emailHelp">
     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>
   <div class="mb-3 col-md-6">
     <label for="password" class="form-label">Password</label>
-    <input type="password" class="form-control" id="password" name="password">
+    <input type="password" class="form-control" id="password" name="password" maxlength="30">
   </div>
   <button type="submit" class="btn btn-primary">Login</button>
 </form>
