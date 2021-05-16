@@ -7,17 +7,19 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
   include 'partials/_dbconnect.php';
 $username=$_POST["username"];
 $password=$_POST["password"];
+$uv=$_POST["uv"];
 // $shoalert=true;
 $sql="SELECT * FROM `users` WHERE username='$username'";
 $result=mysqli_query($conn,$sql);
 $num=mysqli_num_rows($result);
 if($num==1){
-  while($row=mysqli_fetch_assoc($result)){
-  if(password_verify($password, $row['password'])){
+  while(($row=mysqli_fetch_assoc($result))){
+  if((password_verify($password, $row['password']))  && $uv==$row['uv']){
     $login=true;
     session_start();
     $_SESSION["loggedin"]=true;
     $_SESSION["username"]=$username;
+    $_SESSION["uv"]=$uv;
     header("location: welcome.php");
   }
   else{
@@ -75,7 +77,7 @@ $shoerror="Invalid credentials";
     <br>
     <h1 class="text-center">Login here</h1>
 
-    <form action='/login/login.php' method='post' id='loginform'>
+    <form action='login.php' method='post' id='loginform'>
   <div class="mb-3 col-md-6">
     <label for="username" class="form-label">Username</label>
     <input type="email" class="form-control " id="username" name="username" maxlength="30" aria-describedby="emailHelp">
@@ -85,7 +87,24 @@ $shoerror="Invalid credentials";
     <label for="password" class="form-label">Password</label>
     <input type="password" class="form-control" id="password" name="password" maxlength="30">
   </div>
+  <div class="form-check col-md-6">
+  <input class="form-check-input" type="radio" name="uv" id="flexRadioDefault1" value="asAdmin">
+  <label class="form-check-label" for="flexRadioDefault1">
+    Admin
+  </label>
+</div>
+<div class="form-check col-md-6">
+  <input class="form-check-input" type="radio" name="uv" id="flexRadioDefault2" value="asVoter" checked>
+  <label class="form-check-label" for="flexRadioDefault2">
+   Voter
+  </label>
+</div>
+<br>
   <button type="submit" class="btn btn-primary">Login</button>
+  <br>
+  <div>
+  New user? <a href="signup.php">register here</a>
+</div>
 </form>
     </div>
 

@@ -7,11 +7,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 $username=$_POST["username"];
 $password=$_POST["password"];
 $cpassword=$_POST["cpassword"];
+$uv=$_POST["uv"];
 $exist=false;
 if(($password==$cpassword) && $exist==false){
   $hash=password_hash($password, PASSWORD_DEFAULT);
 $shoalert=true;
-$sql="INSERT INTO `users` ( `username`, `password`, `dt`) VALUES ( '$username', '$hash', current_timestamp())";
+$sql="INSERT INTO `users` ( `username`, `password`,`uv`, `dt`) VALUES ( '$username', '$hash','$uv', current_timestamp())";
 $result=mysqli_query($conn,$sql);
 }
 else{
@@ -63,7 +64,7 @@ $shoerror="The passwords do not match!";
     <br>
     <h1 class="text-center">SignUp here</h1>
 
-    <form action='/login/signup.php' method='post' id='signupform'>
+    <form action='signup.php' method='post' id='signupform'>
   <div class="mb-3 col-md-6">
     <label for="username" class="form-label">Username</label>
     <input type="email" class="form-control " id="username" name="username" aria-describedby="emailHelp">
@@ -77,6 +78,19 @@ $shoerror="The passwords do not match!";
     <label for="cpassword" class="form-label">Confirm Password</label>
     <input type="password" class="form-control" id="cpassword" name="cpassword">
   </div>
+  <div class="form-check col-md-6">
+  <input class="form-check-input" type="radio" name="uv" id="flexRadioDefault1" value="asAdmin">
+  <label class="form-check-label" for="flexRadioDefault1">
+    Admin
+  </label>
+</div>
+<div class="form-check col-md-6">
+  <input class="form-check-input" type="radio" name="uv" id="flexRadioDefault2" value="asVoter" checked>
+  <label class="form-check-label" for="flexRadioDefault2">
+   Voter
+  </label>
+</div>
+<br>
   <button type="submit" class="btn btn-primary">Signup</button>
 </form>
     </div>
